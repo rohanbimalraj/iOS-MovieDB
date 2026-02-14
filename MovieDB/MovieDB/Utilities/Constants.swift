@@ -14,7 +14,7 @@ struct Constants {
     static let imageBaseURL = "https://image.tmdb.org/t/p"
     
     // MARK: - Image Sizes
-    static let posterSize = "w500"
+    static let posterSize = "w342"
     static let backdropSize = "w780"
     static let profileSize = "w185"
     

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct MovieCardView: View {
     
@@ -17,33 +18,30 @@ struct MovieCardView: View {
         VStack(alignment: .leading, spacing: 8) {
             // Poster Image
             ZStack(alignment: .topTrailing) {
-                AsyncImage(url: movie.posterURL) { phase in
-                    switch phase {
-                    case .empty:
+                KFImage(movie.posterURL)
+                    .placeholder {
                         Rectangle()
                             .fill(Color.gray.opacity(0.2))
+                            .frame(height: 240)
                             .overlay(
                                 ProgressView()
                             )
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                    case .failure:
+                    }
+                    .onFailure { _ in
                         Rectangle()
                             .fill(Color.gray.opacity(0.2))
+                            .frame(height: 240)
                             .overlay(
                                 Image(systemName: "photo")
                                     .foregroundColor(.gray)
                                     .font(.largeTitle)
                             )
-                    @unknown default:
-                        EmptyView()
                     }
-                }
-                .frame(height: 240)
-                .clipped()
-                .cornerRadius(12)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(height: 240)
+                    .clipped()
+                    .cornerRadius(12)
                 
                 // Favorite Button
                 Button(action: onFavoriteToggle) {

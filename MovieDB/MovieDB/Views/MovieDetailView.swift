@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct MovieDetailView: View {
     
@@ -76,19 +77,13 @@ struct MovieDetailView: View {
         ZStack(alignment: .bottom) {
             // Backdrop Image
             GeometryReader { geometry in
-                AsyncImage(url: movie.backdropURL) { phase in
-                    switch phase {
-                    case .empty:
+                KFImage(movie.backdropURL)
+                    .placeholder {
                         Rectangle()
                             .fill(Color.gray.opacity(0.2))
                             .overlay(ProgressView())
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: geometry.size.width, height: 300)
-                            .clipped()
-                    case .failure:
+                    }
+                    .onFailure { _ in
                         Rectangle()
                             .fill(Color.gray.opacity(0.2))
                             .overlay(
@@ -96,10 +91,11 @@ struct MovieDetailView: View {
                                     .foregroundColor(.gray)
                                     .font(.largeTitle)
                             )
-                    @unknown default:
-                        EmptyView()
                     }
-                }
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: geometry.size.width, height: 300)
+                    .clipped()
             }
             .frame(height: 300)
             
@@ -113,21 +109,17 @@ struct MovieDetailView: View {
             
             // Poster
             HStack(alignment: .bottom, spacing: 16) {
-                AsyncImage(url: movie.posterURL) { phase in
-                    switch phase {
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                    default:
+                KFImage(movie.posterURL)
+                    .placeholder {
                         Rectangle()
                             .fill(Color.gray.opacity(0.3))
                     }
-                }
-                .frame(width: 100, height: 150)
-                .clipped()
-                .cornerRadius(12)
-                .shadow(radius: 10)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 100, height: 150)
+                    .clipped()
+                    .cornerRadius(12)
+                    .shadow(radius: 10)
                 
                 Spacer()
             }
@@ -205,21 +197,17 @@ struct MovieDetailView: View {
                 Link(destination: url) {
                     ZStack {
                         // YouTube Thumbnail
-                        AsyncImage(url: trailer.thumbnailURL) { phase in
-                            switch phase {
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .aspectRatio(16/9, contentMode: .fill)
-                            default:
+                        KFImage(trailer.thumbnailURL)
+                            .placeholder {
                                 Rectangle()
                                     .fill(Color.gray.opacity(0.3))
                                     .aspectRatio(16/9, contentMode: .fit)
                             }
-                        }
-                        .frame(maxWidth: .infinity)
-                        .clipped()
-                        .cornerRadius(12)
+                            .resizable()
+                            .aspectRatio(16/9, contentMode: .fill)
+                            .frame(maxWidth: .infinity)
+                            .clipped()
+                            .cornerRadius(12)
                         
                         // Play Button Overlay
                         Image(systemName: "play.circle.fill")
@@ -281,25 +269,27 @@ struct MovieDetailView: View {
                 HStack(spacing: 16) {
                     ForEach(viewModel.directors) { director in
                         VStack(spacing: 8) {
-                            AsyncImage(url: director.profileURL) { phase in
-                                switch phase {
-                                case .success(let image):
-                                    image
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                case .empty, .failure:
+                            KFImage(director.profileURL)
+                                .placeholder {
                                     Circle()
                                         .fill(Color.gray.opacity(0.3))
                                         .overlay(
                                             Image(systemName: "person.fill")
                                                 .foregroundColor(.gray)
                                         )
-                                @unknown default:
-                                    EmptyView()
                                 }
-                            }
-                            .frame(width: 80, height: 80)
-                            .clipShape(Circle())
+                                .onFailure { _ in
+                                    Circle()
+                                        .fill(Color.gray.opacity(0.3))
+                                        .overlay(
+                                            Image(systemName: "person.fill")
+                                                .foregroundColor(.gray)
+                                        )
+                                }
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 80, height: 80)
+                                .clipShape(Circle())
                             
                             Text(director.name)
                                 .font(.caption)
@@ -325,25 +315,27 @@ struct MovieDetailView: View {
                 HStack(spacing: 16) {
                     ForEach(viewModel.cast) { castMember in
                         VStack(spacing: 8) {
-                            AsyncImage(url: castMember.profileURL) { phase in
-                                switch phase {
-                                case .success(let image):
-                                    image
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                case .empty, .failure:
+                            KFImage(castMember.profileURL)
+                                .placeholder {
                                     Circle()
                                         .fill(Color.gray.opacity(0.3))
                                         .overlay(
                                             Image(systemName: "person.fill")
                                                 .foregroundColor(.gray)
                                         )
-                                @unknown default:
-                                    EmptyView()
                                 }
-                            }
-                            .frame(width: 80, height: 80)
-                            .clipShape(Circle())
+                                .onFailure { _ in
+                                    Circle()
+                                        .fill(Color.gray.opacity(0.3))
+                                        .overlay(
+                                            Image(systemName: "person.fill")
+                                                .foregroundColor(.gray)
+                                        )
+                                }
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 80, height: 80)
+                                .clipShape(Circle())
                             
                             VStack(spacing: 2) {
                                 Text(castMember.name)
