@@ -19,23 +19,23 @@ struct MovieCardView: View {
             // Poster Image
             ZStack(alignment: .topTrailing) {
                 KFImage(movie.posterURL)
-                    .placeholder {
+                    .placeholder { _ in
                         Rectangle()
                             .fill(Color.gray.opacity(0.2))
                             .frame(height: 240)
-                            .overlay(
+                            .overlay {
                                 ProgressView()
-                            )
+                            }
                     }
                     .onFailure { _ in
                         Rectangle()
                             .fill(Color.gray.opacity(0.2))
                             .frame(height: 240)
-                            .overlay(
+                            .overlay {
                                 Image(systemName: "photo")
                                     .foregroundColor(.gray)
                                     .font(.largeTitle)
-                            )
+                            }
                     }
                     .resizable()
                     .aspectRatio(contentMode: .fill)

@@ -78,19 +78,21 @@ struct MovieDetailView: View {
             // Backdrop Image
             GeometryReader { geometry in
                 KFImage(movie.backdropURL)
-                    .placeholder {
+                    .placeholder { _ in
                         Rectangle()
                             .fill(Color.gray.opacity(0.2))
-                            .overlay(ProgressView())
+                            .overlay {
+                                ProgressView()
+                            }
                     }
                     .onFailure { _ in
                         Rectangle()
                             .fill(Color.gray.opacity(0.2))
-                            .overlay(
+                            .overlay {
                                 Image(systemName: "photo")
                                     .foregroundColor(.gray)
                                     .font(.largeTitle)
-                            )
+                            }
                     }
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -270,21 +272,21 @@ struct MovieDetailView: View {
                     ForEach(viewModel.directors) { director in
                         VStack(spacing: 8) {
                             KFImage(director.profileURL)
-                                .placeholder {
+                                .placeholder { _ in
                                     Circle()
                                         .fill(Color.gray.opacity(0.3))
-                                        .overlay(
+                                        .overlay {
                                             Image(systemName: "person.fill")
                                                 .foregroundColor(.gray)
-                                        )
+                                        }
                                 }
                                 .onFailure { _ in
                                     Circle()
                                         .fill(Color.gray.opacity(0.3))
-                                        .overlay(
+                                        .overlay {
                                             Image(systemName: "person.fill")
                                                 .foregroundColor(.gray)
-                                        )
+                                        }
                                 }
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
@@ -316,21 +318,21 @@ struct MovieDetailView: View {
                     ForEach(viewModel.cast) { castMember in
                         VStack(spacing: 8) {
                             KFImage(castMember.profileURL)
-                                .placeholder {
+                                .placeholder { _ in
                                     Circle()
                                         .fill(Color.gray.opacity(0.3))
-                                        .overlay(
+                                        .overlay {
                                             Image(systemName: "person.fill")
                                                 .foregroundColor(.gray)
-                                        )
+                                        }
                                 }
                                 .onFailure { _ in
                                     Circle()
                                         .fill(Color.gray.opacity(0.3))
-                                        .overlay(
+                                        .overlay {
                                             Image(systemName: "person.fill")
                                                 .foregroundColor(.gray)
-                                        )
+                                        }
                                 }
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
