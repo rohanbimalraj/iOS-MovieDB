@@ -186,13 +186,14 @@ This project uses **Kingfisher** for efficient image loading and caching, plus n
 ## 📝 Assumptions
 
 1. **Internet Connection Required**: App requires active internet connection for all features
-2. **Trailers**: Most movies have YouTube trailers; when unavailable, section is hidden
-3. **Runtime Data**: Popular movies endpoint doesn't include runtime; fetched from details API
-4. **Image Quality**: Uses w500 for posters, w780 for backdrops, w185 for profiles
-5. **Cast Limit**: Shows first 10 cast members to maintain performance
-6. **Local Favorites Only**: Favorites are stored locally; no cloud sync
-7. **English Content**: API returns English content by default
-8. **TMDb API Stability**: Assumes TMDb API structure remains consistent
+2. **Network Access**: If using Jio network, VPN may be required as TMDb is blocked on Jio
+3. **Trailers**: Most movies have YouTube trailers; when unavailable, section is hidden
+4. **Runtime Data**: Popular movies endpoint doesn't include runtime; fetched from details API
+5. **Image Quality**: Uses w500 for posters, w780 for backdrops, w185 for profiles
+6. **Cast Limit**: Shows first 10 cast members to maintain performance
+7. **Local Favorites Only**: Favorites are stored locally; no cloud sync
+8. **English Content**: API returns English content by default
+9. **TMDb API Stability**: Assumes TMDb API structure remains consistent
 
 ## ✨ Implemented Features Detail
 
@@ -239,12 +240,13 @@ This project uses **Kingfisher** for efficient image loading and caching, plus n
 
 1. **No Offline Support**: Requires internet connection; no caching implemented
 2. **No Pagination**: Only loads first page of popular movies and search results
-3. **Basic Error Messages**: Generic error messages without detailed troubleshooting
-4. **No Share Functionality**: Cannot share movies with others
-5. **No Deep Linking**: No support for opening specific movies via URL
-6. **No Accessibility Labels**: VoiceOver support not fully implemented
-7. **No Landscape Optimization**: UI optimized for portrait mode only
-8. **No Unit Tests**: While code is structured for testability, no tests are included
+3. **No Favorites Screen**: Favorites are only indicated on cards and detail page; no dedicated screen to view all favorites together
+4. **Basic Error Messages**: Generic error messages without detailed troubleshooting
+5. **No Share Functionality**: Cannot share movies with others
+6. **No Deep Linking**: No support for opening specific movies via URL
+7. **No Accessibility Labels**: VoiceOver support not fully implemented
+8. **No Landscape Optimization**: UI optimized for portrait mode only
+9. **No Unit Tests**: While code is structured for testability, no tests are included
 
 ## 🧪 Testing Approach (for future implementation)
 
