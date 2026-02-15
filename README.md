@@ -267,7 +267,12 @@ let viewModel = MoviesViewModel(tmdbService: TMDbService(networkService: mockSer
 
 ## 📸 Screenshots
 
-*(Screenshots would be added here in a real submission)*
+### Home Screen (Movies List)
+<img src="Screenshots/home.png" width="300" alt="Home Screen showing popular movies grid with search">
+
+
+### Movie Detail Screen
+<img src="Screenshots/detail.png" width="300" alt="Movie Detail Screen with trailer, cast, and info">
 
 ## 🔗 API Endpoints Used
 
