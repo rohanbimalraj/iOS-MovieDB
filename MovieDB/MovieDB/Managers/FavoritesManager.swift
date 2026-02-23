@@ -8,8 +8,19 @@
 import Foundation
 import Combine
 
+// MARK: - Favorites Manager Protocol
+protocol FavoritesManagerProtocol: ObservableObject {
+    var favoriteMovieIds: Set<Int> { get }
+    func addFavorite(_ movieId: Int)
+    func removeFavorite(_ movieId: Int)
+    func toggleFavorite(_ movieId: Int)
+    func isFavorite(_ movieId: Int) -> Bool
+    func getAllFavorites() -> Set<Int>
+    func clearAllFavorites()
+}
+
 // MARK: - Favorites Manager
-class FavoritesManager: ObservableObject {
+class FavoritesManager: FavoritesManagerProtocol {
     
     static let shared = FavoritesManager()
     

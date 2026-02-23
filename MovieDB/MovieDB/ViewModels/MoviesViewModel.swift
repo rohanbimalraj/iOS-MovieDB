@@ -20,13 +20,13 @@ class MoviesViewModel: ObservableObject {
     @Published var hasError: Bool = false
     
     // MARK: - Private Properties
-    private let tmdbService: TMDbService
-    private let favoritesManager: FavoritesManager
+    private let tmdbService: TMDbServiceProtocol
+    private let favoritesManager: any FavoritesManagerProtocol
     private var cancellables = Set<AnyCancellable>()
     private var searchTask: Task<Void, Never>?
     
     // MARK: - Initialization
-    init(tmdbService: TMDbService = TMDbService(), favoritesManager: FavoritesManager = .shared) {
+    init(tmdbService: TMDbServiceProtocol = TMDbService(), favoritesManager: any FavoritesManagerProtocol = FavoritesManager.shared) {
         self.tmdbService = tmdbService
         self.favoritesManager = favoritesManager
         
@@ -64,7 +64,7 @@ class MoviesViewModel: ObservableObject {
             errorMessage = nil
             
             do {
-                let response = try await tmdbService.fetchPopularMovies()
+                let response = try await tmdbService.fetchPopularMovies(page: 1)
                 if !Task.isCancelled {
                     movies = response.results
                 }
@@ -89,7 +89,7 @@ class MoviesViewModel: ObservableObject {
             errorMessage = nil
             
             do {
-                let response = try await tmdbService.searchMovies(query: query)
+                let response = try await tmdbService.searchMovies(query: query, page: 1)
                 if !Task.isCancelled {
                     movies = response.results
                 }
@@ -117,11 +117,7 @@ class MoviesViewModel: ObservableObject {
     // MARK: - Error Handling
     private func handleError(_ error: Error) {
         hasError = true
-        if let networkError = error as? NetworkError {
-            errorMessage = networkError.errorDescription
-        } else {
-            errorMessage = error.localizedDescription
-        }
+        errorMessage = error.localizedDescription
     }
     
     // MARK: - Retry

@@ -21,12 +21,12 @@ class MovieDetailViewModel: ObservableObject {
     @Published var hasError: Bool = false
     
     // MARK: - Private Properties
-    private let tmdbService: TMDbService
-    private let favoritesManager: FavoritesManager
+    private let tmdbService: TMDbServiceProtocol
+    private let favoritesManager: any FavoritesManagerProtocol
     private let movieId: Int
     
     // MARK: - Initialization
-    init(movieId: Int, tmdbService: TMDbService = TMDbService(), favoritesManager: FavoritesManager = .shared) {
+    init(movieId: Int, tmdbService: TMDbServiceProtocol = TMDbService(), favoritesManager: any FavoritesManagerProtocol = FavoritesManager.shared) {
         self.movieId = movieId
         self.tmdbService = tmdbService
         self.favoritesManager = favoritesManager
@@ -106,11 +106,7 @@ class MovieDetailViewModel: ObservableObject {
     // MARK: - Error Handling
     private func handleError(_ error: Error) {
         hasError = true
-        if let networkError = error as? NetworkError {
-            errorMessage = networkError.errorDescription
-        } else {
-            errorMessage = error.localizedDescription
-        }
+        errorMessage = error.localizedDescription
     }
     
     // MARK: - Retry

@@ -45,8 +45,17 @@ enum TMDbAPI {
     }
 }
 
+// MARK: - TMDb Service Protocol
+protocol TMDbServiceProtocol {
+    func fetchPopularMovies(page: Int) async throws -> MoviesResponse
+    func searchMovies(query: String, page: Int) async throws -> MoviesResponse
+    func fetchMovieDetails(id: Int) async throws -> MovieDetail
+    func fetchMovieVideos(id: Int) async throws -> VideosResponse
+    func fetchMovieCredits(id: Int) async throws -> CreditsResponse
+}
+
 // MARK: - TMDb Service
-class TMDbService {
+class TMDbService: TMDbServiceProtocol {
     
     private let networkService: NetworkServiceProtocol
     

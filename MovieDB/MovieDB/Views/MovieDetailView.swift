@@ -14,7 +14,6 @@ struct MovieDetailView: View {
     
     @StateObject private var viewModel: MovieDetailViewModel
     @StateObject private var favoritesManager = FavoritesManager.shared
-    @Environment(\.dismiss) private var dismiss
     
     init(movieId: Int) {
         self.movieId = movieId
